@@ -1,0 +1,27 @@
+dist: xenial
+language: python
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.5-dev"  # 3.5 development branch
+  - "3.6"
+  - "3.6-dev"  # 3.6 development branch
+    services:
+      - mysql
+    env:
+      - DJANGO=1.8 DB=mysql
+      - DJANGO_VERSION=1.10.8
+      - DJANGO_VERSION=1.11.5
+    install: 
+      - pip install -r requirements.txt
+    before_script:
+      - mysql -e 'create database test;' -u root
+    script: 
+      - python manage.py test
+      notifications:
+  email:
+    on_success: never
+    on_failure: change
